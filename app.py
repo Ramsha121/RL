@@ -20,14 +20,15 @@ st.set_page_config(
 )
 
 st.title("🎯 Intelligent Employment Selection System")
-st.write(
-    "AI-powered Resume Analysis using NLP, K-Armed Bandit, "
-    "Gradient Ascent and TF-IDF"
+
+st.caption(
+    "AI Resume Analysis using NLP, K-Armed Bandit, "
+    "TF-IDF and Gradient Ascent"
 )
 
 
 # ============================================================
-# SKILL DATABASE
+# SKILL DICTIONARY
 # ============================================================
 
 skill_dictionary = [
@@ -39,6 +40,7 @@ skill_dictionary = [
     "power bi",
     "machine learning",
     "deep learning",
+    "artificial intelligence",
     "ai",
     "data analysis",
     "statistics",
@@ -58,6 +60,7 @@ skill_dictionary = [
     "mysql",
     "postgresql",
     "mongodb",
+    "scikit-learn",
     "scikit",
     "git",
     "github",
@@ -65,7 +68,10 @@ skill_dictionary = [
     "dashboard",
     "analytics",
     "regression",
-    "classification"
+    "classification",
+    "streamlit",
+    "powerpoint",
+    "ms office"
 ]
 
 
@@ -76,8 +82,11 @@ skill_dictionary = [
 education_keywords = [
     "bsc",
     "bachelor",
+    "b.tech",
+    "btech",
     "msc",
     "master",
+    "m.tech",
     "phd",
     "computer science",
     "data science",
@@ -86,71 +95,101 @@ education_keywords = [
     "engineering",
     "artificial intelligence",
     "machine learning",
-    "deep learning",
-    "analytics",
     "data analytics",
-    "big data",
-    "cloud computing",
-    "algorithms",
-    "data structures",
-    "probability",
-    "linear algebra",
-    "calculus",
-    "project",
-    "research"
+    "analytics",
+    "computer applications"
 ]
 
 
 # ============================================================
-# EXPERIENCE KEYWORDS
+# PROJECT / EXPERIENCE KEYWORDS
 # ============================================================
 
+project_keywords = [
+    "project",
+    "developed",
+    "develop",
+    "built",
+    "designed",
+    "implemented",
+    "created",
+    "analyzed",
+    "analysis",
+    "dashboard",
+    "model",
+    "trained",
+    "prediction",
+    "classification",
+    "visualization",
+    "simulation",
+    "deployment",
+    "streamlit",
+    "machine learning",
+    "data analysis"
+]
+
+
 experience_keywords = [
+    "experience",
     "intern",
     "internship",
-    "project",
-    "research",
-    "experience",
     "worked",
     "company",
     "client",
-    "team project",
-    "data analysis",
-    "data scientist",
-    "data analyst",
-    "machine learning engineer",
-    "research assistant",
-    "developed",
-    "implemented",
-    "designed",
-    "built",
-    "trained model",
-    "analyzed data",
-    "created dashboard"
+    "professional",
+    "employment",
+    "responsibilities",
+    "job",
+    "role",
+    "team"
 ]
 
 
 # ============================================================
-# CULTURE / SOFT SKILLS
+# CERTIFICATION KEYWORDS
 # ============================================================
 
-culture_keywords = [
-    "team",
-    "leadership",
+certification_keywords = [
+    "certification",
+    "certified",
+    "certificate",
+    "nism",
+    "coursera",
+    "udemy",
+    "google",
+    "microsoft",
+    "ibm",
+    "deloitte",
+    "accenture",
+    "aws",
+    "azure",
+    "power bi",
+    "sql",
+    "python"
+]
+
+
+# ============================================================
+# SOFT SKILLS
+# ============================================================
+
+soft_skill_keywords = [
     "communication",
+    "leadership",
+    "teamwork",
+    "team",
+    "collaboration",
+    "problem solving",
+    "critical thinking",
+    "adaptability",
     "presentation",
     "management",
-    "problem solving",
-    "adaptability",
-    "collaboration",
-    "teamwork",
-    "critical thinking",
-    "decision making",
-    "time management",
     "planning",
+    "decision making",
     "creativity",
     "innovation",
-    "initiative"
+    "initiative",
+    "time management"
 ]
 
 
@@ -161,112 +200,205 @@ culture_keywords = [
 roles = [
     {
         "name": "Business Analyst",
-        "weights": np.array([0.4, 0.3, 0.2, 0.1]),
-        "link": "https://jobs.company.com/business-analyst"
-    },
 
-    {
-        "name": "Machine Learning Intern",
-        "weights": np.array([0.5, 0.2, 0.2, 0.1]),
-        "link": "https://jobs.company.com/ml-intern"
+        "weights": np.array([
+            0.35,   # skills
+            0.15,   # education
+            0.20,   # projects
+            0.10,   # experience
+            0.10,   # certifications
+            0.10    # soft skills
+        ]),
+
+        "link":
+            "https://jobs.company.com/business-analyst"
     },
 
     {
         "name": "Data Analyst",
-        "weights": np.array([0.45, 0.25, 0.2, 0.1]),
-        "link": "https://jobs.company.com/data-analyst"
+
+        "weights": np.array([
+            0.40,
+            0.15,
+            0.20,
+            0.10,
+            0.10,
+            0.05
+        ]),
+
+        "link":
+            "https://jobs.company.com/data-analyst"
+    },
+
+    {
+        "name": "Machine Learning Intern",
+
+        "weights": np.array([
+            0.45,
+            0.15,
+            0.20,
+            0.05,
+            0.10,
+            0.05
+        ]),
+
+        "link":
+            "https://jobs.company.com/ml-intern"
     },
 
     {
         "name": "AI Intern",
-        "weights": np.array([0.55, 0.15, 0.2, 0.1]),
-        "link": "https://jobs.company.com/ai-intern"
+
+        "weights": np.array([
+            0.50,
+            0.15,
+            0.20,
+            0.05,
+            0.05,
+            0.05
+        ]),
+
+        "link":
+            "https://jobs.company.com/ai-intern"
     },
 
     {
         "name": "Research Analyst",
-        "weights": np.array([0.3, 0.3, 0.25, 0.15]),
-        "link": "https://jobs.company.com/research-analyst"
+
+        "weights": np.array([
+            0.30,
+            0.20,
+            0.20,
+            0.10,
+            0.10,
+            0.10
+        ]),
+
+        "link":
+            "https://jobs.company.com/research-analyst"
     }
 ]
 
 
 # ============================================================
-# JOB DESCRIPTIONS FOR TF-IDF
+# JOB DESCRIPTIONS
 # ============================================================
 
 job_descriptions = {
 
     "Business Analyst":
-        "business analysis sql excel dashboard reporting "
-        "data visualization data analytics",
 
-    "Machine Learning Intern":
-        "machine learning python deep learning pandas numpy "
-        "model training artificial intelligence",
+        """
+        business analyst business analysis
+        sql excel power bi tableau
+        reporting dashboard data visualization
+        requirements analysis stakeholder communication
+        data analytics
+        """,
 
     "Data Analyst":
-        "data analysis sql python statistics tableau "
-        "excel visualization reporting",
+
+        """
+        data analyst data analysis
+        sql python excel
+        statistics tableau power bi
+        data visualization dashboard
+        reporting analytics
+        """,
+
+    "Machine Learning Intern":
+
+        """
+        machine learning python
+        pandas numpy scikit-learn
+        regression classification
+        model training artificial intelligence
+        data science
+        """,
 
     "AI Intern":
-        "artificial intelligence neural networks deep learning "
-        "nlp machine learning python",
+
+        """
+        artificial intelligence
+        machine learning deep learning
+        python tensorflow keras
+        nlp neural networks
+        data science
+        """,
 
     "Research Analyst":
-        "research statistics data analysis research methodology "
-        "modeling probability"
+
+        """
+        research analyst statistics
+        data analysis
+        research methodology
+        python sql
+        quantitative analysis
+        modeling
+        """
 }
 
 
 # ============================================================
-# REQUIRED SKILLS FOR EACH ROLE
+# REQUIRED SKILLS BY ROLE
 # ============================================================
 
 required_skills = {
 
     "Business Analyst": [
+
         "sql",
         "excel",
-        "data analysis",
-        "dashboard",
-        "tableau"
+        "power bi",
+        "tableau",
+        "data analysis"
+
+    ],
+
+    "Data Analyst": [
+
+        "sql",
+        "python",
+        "excel",
+        "statistics",
+        "data visualization"
+
     ],
 
     "Machine Learning Intern": [
+
         "python",
         "machine learning",
         "pandas",
         "numpy",
-        "scikit"
-    ],
+        "scikit-learn"
 
-    "Data Analyst": [
-        "sql",
-        "python",
-        "statistics",
-        "tableau",
-        "excel"
     ],
 
     "AI Intern": [
+
         "python",
-        "deep learning",
         "machine learning",
-        "nlp"
+        "deep learning",
+        "nlp",
+        "tensorflow"
+
     ],
 
     "Research Analyst": [
+
         "statistics",
-        "research",
+        "python",
         "data analysis",
-        "modeling"
+        "research",
+        "sql"
+
     ]
 }
 
 
 # ============================================================
-# PDF TEXT EXTRACTION
+# PDF EXTRACTION
 # ============================================================
 
 def extract_resume_text(uploaded_file):
@@ -280,6 +412,7 @@ def extract_resume_text(uploaded_file):
         page_text = page.extract_text()
 
         if page_text:
+
             text += page_text + " "
 
     text = text.lower()
@@ -294,60 +427,348 @@ def extract_resume_text(uploaded_file):
 
 
 # ============================================================
-# NLP SKILL EXTRACTION
+# KEYWORD MATCHING
 # ============================================================
 
-def extract_skills(text):
+def get_matches(text, keywords):
 
-    detected_skills = []
-
-    for skill in skill_dictionary:
-
-        if skill in text:
-
-            detected_skills.append(skill)
-
-    return sorted(set(detected_skills))
-
-
-# ============================================================
-# FEATURE SCORING
-# ============================================================
-
-def calculate_feature_score(text, keywords):
-
-    matches = 0
+    matches = []
 
     for keyword in keywords:
 
-        if keyword in text:
+        if keyword.lower() in text:
 
-            matches += 1
+            matches.append(keyword)
 
-    score = (
-        matches /
-        len(keywords)
-    ) * 10
+    return sorted(
+        set(matches)
+    )
 
-    return round(score, 2)
+
+# ============================================================
+# NORMALIZED CATEGORY SCORE
+# ============================================================
+
+def category_score(
+    text,
+    keywords,
+    max_score=100
+):
+
+    matches = get_matches(
+        text,
+        keywords
+    )
+
+    if len(matches) == 0:
+
+        return 0, matches
+
+    ratio = len(matches) / len(keywords)
+
+    score = ratio * max_score
+
+    return round(
+        min(score, max_score),
+        2
+    ), matches
+
+
+# ============================================================
+# BETTER SKILL SCORE
+# ============================================================
+
+def calculate_skill_score(text):
+
+    detected = get_matches(
+        text,
+        skill_dictionary
+    )
+
+    # We do NOT compare against every possible skill.
+    # The score rewards having a strong selection of relevant skills.
+
+    skill_count = len(detected)
+
+    if skill_count >= 15:
+        score = 95
+
+    elif skill_count >= 12:
+        score = 90
+
+    elif skill_count >= 10:
+        score = 85
+
+    elif skill_count >= 8:
+        score = 78
+
+    elif skill_count >= 6:
+        score = 70
+
+    elif skill_count >= 4:
+        score = 60
+
+    elif skill_count >= 2:
+        score = 45
+
+    else:
+        score = 25
+
+    return score, detected
+
+
+# ============================================================
+# EDUCATION SCORE
+# ============================================================
+
+def calculate_education_score(text):
+
+    matches = get_matches(
+        text,
+        education_keywords
+    )
+
+    score = 40
+
+    if len(matches) >= 1:
+        score += 20
+
+    if any(
+        x in text
+        for x in [
+            "data science",
+            "computer science",
+            "statistics",
+            "engineering"
+        ]
+    ):
+
+        score += 20
+
+    if any(
+        x in text
+        for x in [
+            "bsc",
+            "bachelor",
+            "b.tech",
+            "btech",
+            "msc",
+            "master"
+        ]
+    ):
+
+        score += 10
+
+    if "cgpa" in text or "gpa" in text:
+
+        score += 5
+
+    return min(score, 100), matches
+
+
+# ============================================================
+# PROJECT SCORE
+# ============================================================
+
+def calculate_project_score(text):
+
+    matches = get_matches(
+        text,
+        project_keywords
+    )
+
+    project_indicators = [
+
+        "project",
+        "developed",
+        "built",
+        "designed",
+        "implemented",
+        "dashboard",
+        "model",
+        "simulation"
+
+    ]
+
+    indicators = get_matches(
+        text,
+        project_indicators
+    )
+
+    score = 30
+
+    score += min(
+        len(matches) * 3,
+        30
+    )
+
+    if len(indicators) >= 3:
+        score += 15
+
+    if len(indicators) >= 5:
+        score += 15
+
+    return min(
+        round(score, 2),
+        100
+    ), matches
+
+
+# ============================================================
+# EXPERIENCE SCORE
+# ============================================================
+
+def calculate_experience_score(text):
+
+    matches = get_matches(
+        text,
+        experience_keywords
+    )
+
+    if "internship" in text or "intern" in text:
+
+        score = 70
+
+    elif "experience" in text:
+
+        score = 65
+
+    elif "worked" in text:
+
+        score = 60
+
+    elif "project" in text:
+
+        # Projects provide relevant experience
+        score = 55
+
+    else:
+
+        score = 40
+
+    if len(matches) >= 5:
+
+        score += 10
+
+    return min(
+        score,
+        100
+    ), matches
+
+
+# ============================================================
+# CERTIFICATION SCORE
+# ============================================================
+
+def calculate_certification_score(text):
+
+    matches = get_matches(
+        text,
+        certification_keywords
+    )
+
+    count = len(matches)
+
+    if count >= 6:
+
+        score = 95
+
+    elif count >= 4:
+
+        score = 85
+
+    elif count >= 2:
+
+        score = 75
+
+    elif count >= 1:
+
+        score = 60
+
+    else:
+
+        score = 40
+
+    return score, matches
+
+
+# ============================================================
+# SOFT SKILL SCORE
+# ============================================================
+
+def calculate_soft_skill_score(text):
+
+    matches = get_matches(
+        text,
+        soft_skill_keywords
+    )
+
+    count = len(matches)
+
+    if count >= 8:
+
+        score = 90
+
+    elif count >= 6:
+
+        score = 82
+
+    elif count >= 4:
+
+        score = 72
+
+    elif count >= 2:
+
+        score = 60
+
+    elif count >= 1:
+
+        score = 50
+
+    else:
+
+        score = 40
+
+    return score, matches
 
 
 # ============================================================
 # ATS SCORE
 # ============================================================
 
-def calculate_ats_score(features):
-
-    skill = features[0]
-    experience = features[1]
-    education = features[2]
-    culture = features[3]
+def calculate_ats_score(
+    skill,
+    education,
+    projects,
+    experience,
+    certification,
+    soft_skills
+):
 
     score = (
-        skill * 3 +
-        experience * 3 +
-        education * 2 +
-        culture * 2
+
+        skill * 0.35
+
+        +
+
+        education * 0.15
+
+        +
+
+        projects * 0.20
+
+        +
+
+        experience * 0.10
+
+        +
+
+        certification * 0.10
+
+        +
+
+        soft_skills * 0.10
+
     )
 
     return round(
@@ -357,17 +778,22 @@ def calculate_ats_score(features):
 
 
 # ============================================================
-# K-ARMED BANDIT + GRADIENT ASCENT
+# BANDIT TRAINING
 # ============================================================
 
-def train_bandit(features, episodes):
+def train_bandit(
+    features,
+    episodes
+):
 
     random.seed(42)
     np.random.seed(42)
 
-    number_of_arms = len(roles)
+    number_of_arms = len(
+        roles
+    )
 
-    epsilon = 0.2
+    epsilon = 0.20
 
     arm_values = np.zeros(
         number_of_arms
@@ -377,17 +803,24 @@ def train_bandit(features, episodes):
         number_of_arms
     )
 
-    # Initial random weights
-    weights = np.random.rand(4)
+    weights = np.random.rand(
+        len(features)
+    )
 
-    learning_rate = 0.01
+    learning_rate = 0.005
 
     reward_history = []
 
-    for episode in range(episodes):
+    normalized_features = (
+        features / 100
+    )
+
+    for episode in range(
+        episodes
+    ):
 
         # ----------------------------------------------------
-        # EPSILON GREEDY
+        # EPSILON GREEDY SELECTION
         # ----------------------------------------------------
 
         if random.random() < epsilon:
@@ -406,25 +839,24 @@ def train_bandit(features, episodes):
             )
 
         # ----------------------------------------------------
-        # CALCULATE SCORE
+        # ROLE SCORE
         # ----------------------------------------------------
 
-        score = np.dot(
-            weights,
-            features
-        ) / 10
+        role_weights = roles[
+            arm
+        ]["weights"]
+
+        role_score = np.dot(
+            role_weights,
+            normalized_features
+        )
 
         # ----------------------------------------------------
         # REWARD
         # ----------------------------------------------------
 
         reward = min(
-            0.5 * score
-            +
-            0.3 * (features[1] / 10)
-            +
-            0.2 * (features[3] / 10),
-
+            role_score,
             1
         )
 
@@ -447,11 +879,13 @@ def train_bandit(features, episodes):
         # ----------------------------------------------------
 
         weights += (
+
             learning_rate
             *
             reward
             *
-            features
+            normalized_features
+
         )
 
         weights = np.clip(
@@ -465,10 +899,12 @@ def train_bandit(features, episodes):
         )
 
     return (
+
         weights,
         arm_values,
         arm_counts,
         reward_history
+
     )
 
 
@@ -476,84 +912,109 @@ def train_bandit(features, episodes):
 # ROLE MATCHING
 # ============================================================
 
-def calculate_role_scores(features):
+def calculate_role_scores(
+    features
+):
+
+    normalized_features = (
+        features / 100
+    )
 
     results = []
 
     for role in roles:
 
         score = np.dot(
-            role["weights"],
-            features
-        ) / 10
 
-        score = min(
-            score * 100,
-            100
+            role["weights"],
+
+            normalized_features
+
         )
+
+        score *= 100
 
         results.append({
 
-            "Role": role["name"],
+            "Role":
+                role["name"],
 
-            "Score": round(
-                float(score),
-                2
-            ),
+            "Score":
+                round(
+                    float(score),
+                    2
+                ),
 
-            "Link": role["link"]
+            "Link":
+                role["link"]
 
         })
 
     results.sort(
-        key=lambda x: x["Score"],
+
+        key=lambda x:
+            x["Score"],
+
         reverse=True
+
     )
 
     return results
 
 
 # ============================================================
-# TF-IDF MATCHING
+# TF-IDF
 # ============================================================
 
-def tfidf_matching(resume_text):
+def tfidf_matching(
+    resume_text
+):
 
     documents = [
+
         resume_text
+
     ] + list(
         job_descriptions.values()
     )
 
-    vectorizer = TfidfVectorizer()
+    vectorizer = TfidfVectorizer(
+        stop_words="english"
+    )
 
     matrix = vectorizer.fit_transform(
         documents
     )
 
-    similarity = cosine_similarity(
-        matrix[0],
-        matrix[1:]
-    )
+    similarities = cosine_similarity(
 
-    scores = {}
+        matrix[0:1],
+
+        matrix[1:]
+
+    )[0]
+
+    results = {}
 
     for index, role in enumerate(
         job_descriptions
     ):
 
-        scores[role] = round(
+        results[role] = round(
+
             float(
-                similarity[0][index]
+                similarities[index]
             ) * 100,
+
             2
+
         )
 
-    return scores
+    return results
 
 
 # ============================================================
-# SKILL GAP ANALYSIS
+# SKILL GAP
 # ============================================================
 
 def find_skill_gaps(
@@ -561,17 +1022,19 @@ def find_skill_gaps(
     role
 ):
 
-    missing_skills = []
+    missing = []
 
-    for skill in required_skills[role]:
+    for skill in required_skills[
+        role
+    ]:
 
-        if skill not in resume_text:
+        if skill.lower() not in resume_text:
 
-            missing_skills.append(
+            missing.append(
                 skill
             )
 
-    return missing_skills
+    return missing
 
 
 # ============================================================
@@ -579,532 +1042,720 @@ def find_skill_gaps(
 # ============================================================
 
 st.sidebar.header(
-    "Resume Upload"
+    "Resume Analyzer"
 )
 
 uploaded_file = st.sidebar.file_uploader(
+
     "Upload Resume PDF",
+
     type=["pdf"]
+
 )
 
 st.sidebar.markdown("---")
 
 episodes = st.sidebar.slider(
-    "Training Episodes",
+
+    "Bandit Training Episodes",
+
     min_value=50,
+
     max_value=1000,
+
     value=300,
+
     step=50
+
 )
 
 
 # ============================================================
-# APPLICATION
+# START APPLICATION
 # ============================================================
 
 if uploaded_file is None:
 
     st.info(
-        "Please upload a resume PDF from the sidebar."
+        "Upload a PDF resume from the sidebar "
+        "to start the analysis."
     )
 
     st.markdown(
         """
         ### System Workflow
 
-        **Resume PDF**
-
+        Resume PDF
         ↓
-
-        **Text Extraction**
-
+        NLP Skill Extraction
         ↓
-
-        **NLP Skill Extraction**
-
+        Resume Feature Analysis
         ↓
-
-        **Feature Scoring**
-
+        ATS Score
         ↓
-
-        **ATS Score**
-
+        K-Armed Bandit
         ↓
-
-        **K-Armed Bandit**
-
+        Job Role Recommendation
         ↓
-
-        **Gradient Ascent**
-
+        TF-IDF Similarity
         ↓
-
-        **Job Recommendation**
-
-        ↓
-
-        **TF-IDF Similarity**
-
-        ↓
-
-        **Skill Gap Analysis**
+        Skill Gap Analysis
         """
+    )
+
+    st.stop()
+
+
+# ============================================================
+# READ RESUME
+# ============================================================
+
+try:
+
+    resume_text = extract_resume_text(
+        uploaded_file
+    )
+
+except Exception as e:
+
+    st.error(
+        "Unable to read the PDF."
+    )
+
+    st.exception(e)
+
+    st.stop()
+
+
+if not resume_text:
+
+    st.error(
+        "No readable text was found in this PDF."
+    )
+
+    st.stop()
+
+
+# ============================================================
+# 1. SKILL EXTRACTION
+# ============================================================
+
+st.header(
+    "1. NLP Skill Extraction"
+)
+
+skill_score, detected_skills = (
+    calculate_skill_score(
+        resume_text
+    )
+)
+
+if detected_skills:
+
+    st.success(
+        f"{len(detected_skills)} relevant skills detected"
+    )
+
+    columns = st.columns(4)
+
+    for i, skill in enumerate(
+        detected_skills
+    ):
+
+        columns[
+            i % 4
+        ].markdown(
+            f"`{skill}`"
+        )
+
+else:
+
+    st.warning(
+        "No recognized technical skills were detected."
+    )
+
+
+# ============================================================
+# 2. RESUME COMPONENT SCORES
+# ============================================================
+
+st.header(
+    "2. Resume Component Scores"
+)
+
+education_score, education_matches = (
+    calculate_education_score(
+        resume_text
+    )
+)
+
+project_score, project_matches = (
+    calculate_project_score(
+        resume_text
+    )
+)
+
+experience_score, experience_matches = (
+    calculate_experience_score(
+        resume_text
+    )
+)
+
+certification_score, certification_matches = (
+    calculate_certification_score(
+        resume_text
+    )
+)
+
+soft_skill_score, soft_skill_matches = (
+    calculate_soft_skill_score(
+        resume_text
+    )
+)
+
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric(
+    "Technical Skills",
+    f"{skill_score}/100"
+)
+
+col2.metric(
+    "Education",
+    f"{education_score}/100"
+)
+
+col3.metric(
+    "Projects",
+    f"{project_score}/100"
+)
+
+
+col4, col5, col6 = st.columns(3)
+
+col4.metric(
+    "Experience",
+    f"{experience_score}/100"
+)
+
+col5.metric(
+    "Certifications",
+    f"{certification_score}/100"
+)
+
+col6.metric(
+    "Soft Skills",
+    f"{soft_skill_score}/100"
+)
+
+
+# ============================================================
+# 3. ATS SCORE
+# ============================================================
+
+ats_score = calculate_ats_score(
+
+    skill_score,
+
+    education_score,
+
+    project_score,
+
+    experience_score,
+
+    certification_score,
+
+    soft_skill_score
+
+)
+
+
+st.header(
+    "3. Overall ATS Score"
+)
+
+st.progress(
+    int(ats_score)
+)
+
+if ats_score >= 85:
+
+    st.success(
+        f"Excellent Resume — {ats_score}/100"
+    )
+
+elif ats_score >= 75:
+
+    st.success(
+        f"Strong Resume — {ats_score}/100"
+    )
+
+elif ats_score >= 65:
+
+    st.warning(
+        f"Good Resume, but there is room for improvement — "
+        f"{ats_score}/100"
+    )
+
+elif ats_score >= 50:
+
+    st.warning(
+        f"Average Resume — {ats_score}/100"
     )
 
 else:
 
-    try:
-
-        # ====================================================
-        # EXTRACT TEXT
-        # ====================================================
-
-        resume_text = extract_resume_text(
-            uploaded_file
-        )
-
-        if not resume_text:
-
-            st.error(
-                "No readable text found in the PDF."
-            )
-
-            st.stop()
+    st.error(
+        f"Resume needs improvement — {ats_score}/100"
+    )
 
 
-        # ====================================================
-        # SECTION 1 - NLP
-        # ====================================================
+# ============================================================
+# 4. BANDIT
+# ============================================================
 
-        st.header(
-            "1. NLP Skill Extraction"
-        )
+st.header(
+    "4. K-Armed Bandit Learning"
+)
 
-        detected_skills = extract_skills(
-            resume_text
-        )
+features = np.array([
 
-        if detected_skills:
+    skill_score,
 
-            st.success(
-                f"{len(detected_skills)} skills detected"
-            )
+    education_score,
 
-            cols = st.columns(4)
+    project_score,
 
-            for index, skill in enumerate(
-                detected_skills
-            ):
+    experience_score,
 
-                cols[index % 4].markdown(
-                    f"`{skill}`"
-                )
+    certification_score,
 
-        else:
+    soft_skill_score
 
-            st.warning(
-                "No matching skills detected."
-            )
+])
 
 
-        # ====================================================
-        # SECTION 2 - FEATURE SCORING
-        # ====================================================
+(
+    learned_weights,
+    arm_values,
+    arm_counts,
+    reward_history
 
-        st.header(
-            "2. Resume Feature Scores"
-        )
+) = train_bandit(
 
-        skill_score = calculate_feature_score(
-            resume_text,
-            skill_dictionary
-        )
+    features,
 
-        experience_score = calculate_feature_score(
-            resume_text,
-            experience_keywords
-        )
+    episodes
 
-        education_score = calculate_feature_score(
-            resume_text,
-            education_keywords
-        )
-
-        culture_score = calculate_feature_score(
-            resume_text,
-            culture_keywords
-        )
-
-        features = np.array([
-
-            skill_score,
-            experience_score,
-            education_score,
-            culture_score
-
-        ])
+)
 
 
-        col1, col2, col3, col4 = st.columns(4)
+col1, col2 = st.columns(2)
 
-        col1.metric(
-            "Skills",
-            f"{skill_score}/10"
-        )
 
-        col2.metric(
-            "Experience",
-            f"{experience_score}/10"
-        )
+with col1:
 
-        col3.metric(
+    st.subheader(
+        "Learned Feature Weights"
+    )
+
+    weight_table = {
+
+        "Feature": [
+
+            "Technical Skills",
             "Education",
-            f"{education_score}/10"
-        )
+            "Projects",
+            "Experience",
+            "Certifications",
+            "Soft Skills"
 
-        col4.metric(
-            "Culture Fit",
-            f"{culture_score}/10"
-        )
+        ],
 
-
-        # ====================================================
-        # SECTION 3 - ATS
-        # ====================================================
-
-        st.header(
-            "3. ATS Score"
-        )
-
-        ats_score = calculate_ats_score(
-            features
-        )
-
-        st.progress(
-            int(ats_score)
-        )
-
-        st.metric(
-            "Overall ATS Score",
-            f"{ats_score}/100"
-        )
-
-
-        # ====================================================
-        # SECTION 4 - BANDIT
-        # ====================================================
-
-        st.header(
-            "4. K-Armed Bandit Training"
-        )
-
-        (
+        "Weight": np.round(
             learned_weights,
-            arm_values,
-            arm_counts,
-            reward_history
-
-        ) = train_bandit(
-            features,
-            episodes
+            4
         )
 
+    }
 
-        col1, col2 = st.columns(2)
+    st.dataframe(
 
+        weight_table,
 
-        # ----------------------------------------------------
-        # LEARNED WEIGHTS
-        # ----------------------------------------------------
+        hide_index=True,
 
-        with col1:
+        use_container_width=True
 
-            st.subheader(
-                "Learned Feature Weights"
-            )
+    )
 
-            weight_data = {
 
-                "Feature": [
+with col2:
 
-                    "Skills",
-                    "Experience",
-                    "Education",
-                    "Culture Fit"
+    st.subheader(
+        "Training Reward"
+    )
 
-                ],
+    fig, ax = plt.subplots()
 
-                "Weight": np.round(
-                    learned_weights,
-                    4
-                )
+    ax.plot(
+        reward_history
+    )
 
-            }
+    ax.set_xlabel(
+        "Episode"
+    )
 
-            st.dataframe(
-                weight_data,
-                hide_index=True,
-                use_container_width=True
-            )
+    ax.set_ylabel(
+        "Reward"
+    )
 
+    ax.set_title(
+        "K-Armed Bandit Reward"
+    )
 
-        # ----------------------------------------------------
-        # REWARD GRAPH
-        # ----------------------------------------------------
+    ax.grid(
+        True,
+        alpha=0.3
+    )
 
-        with col2:
+    st.pyplot(
+        fig
+    )
 
-            fig, ax = plt.subplots()
+    plt.close(fig)
 
-            ax.plot(
-                reward_history
-            )
 
-            ax.set_title(
-                "Reward During Training"
-            )
+# ============================================================
+# 5. JOB ROLE RECOMMENDATION
+# ============================================================
 
-            ax.set_xlabel(
-                "Episode"
-            )
+st.header(
+    "5. Recommended Job Roles"
+)
 
-            ax.set_ylabel(
-                "Reward"
-            )
+role_results = calculate_role_scores(
+    features
+)
 
-            ax.grid(
-                True,
-                alpha=0.3
-            )
+best_role = role_results[0]
 
-            st.pyplot(fig)
 
-            plt.close(fig)
+st.success(
 
+    f"Best Match: "
+    f"{best_role['Role']} "
+    f"— {best_role['Score']}%"
 
-        # ====================================================
-        # SECTION 5 - ROLE RECOMMENDATION
-        # ====================================================
+)
 
-        st.header(
-            "5. Recommended Job Roles"
-        )
 
-        role_results = calculate_role_scores(
-            features
-        )
+for result in role_results:
 
-        best_role = role_results[0]
+    st.write(
 
-        st.success(
-            f"Best Match: {best_role['Role']} "
-            f"({best_role['Score']}%)"
-        )
+        f"**{result['Role']}** "
+        f"— {result['Score']}%"
 
+    )
 
-        for result in role_results:
+    st.progress(
+        int(result["Score"])
+    )
 
-            st.write(
-                f"**{result['Role']}** — "
-                f"{result['Score']}%"
-            )
 
-            st.progress(
-                int(result["Score"])
-            )
+# ============================================================
+# ROLE CHART
+# ============================================================
 
+fig, ax = plt.subplots(
+    figsize=(10, 5)
+)
 
-        # ====================================================
-        # ROLE CHART
-        # ====================================================
+role_names = [
 
-        role_names = [
+    r["Role"]
 
-            result["Role"]
+    for r in role_results
 
-            for result in role_results
+]
 
-        ]
+role_scores = [
 
-        role_scores = [
+    r["Score"]
 
-            result["Score"]
+    for r in role_results
 
-            for result in role_results
+]
 
-        ]
+ax.bar(
+    role_names,
+    role_scores
+)
 
+ax.set_ylim(
+    0,
+    100
+)
 
-        fig, ax = plt.subplots(
-            figsize=(10, 5)
-        )
+ax.set_xlabel(
+    "Job Role"
+)
 
-        ax.bar(
-            role_names,
-            role_scores
-        )
+ax.set_ylabel(
+    "Match Score (%)"
+)
 
-        ax.set_title(
-            "Job Role Recommendation"
-        )
+ax.set_title(
+    "Job Role Recommendation"
+)
 
-        ax.set_xlabel(
-            "Job Role"
-        )
+ax.tick_params(
+    axis="x",
+    rotation=30
+)
 
-        ax.set_ylabel(
-            "Match Score (%)"
-        )
+st.pyplot(
+    fig
+)
 
-        ax.tick_params(
-            axis="x",
-            rotation=30
-        )
+plt.close(fig)
 
-        st.pyplot(fig)
 
-        plt.close(fig)
+# ============================================================
+# APPLY LINK
+# ============================================================
 
+st.subheader(
+    "Application"
+)
 
-        # ====================================================
-        # APPLY LINK
-        # ====================================================
+st.markdown(
 
-        st.subheader(
-            "Apply"
-        )
+    f"[Apply for "
+    f"{best_role['Role']}]"
+    f"({best_role['Link']})"
 
-        st.markdown(
-            f"[Apply for {best_role['Role']}]"
-            f"({best_role['Link']})"
-        )
+)
 
 
-        # ====================================================
-        # SECTION 6 - TF-IDF
-        # ====================================================
+# ============================================================
+# 6. TF-IDF
+# ============================================================
 
-        st.header(
-            "6. TF-IDF Job Similarity"
-        )
+st.header(
+    "6. TF-IDF Job Similarity"
+)
 
-        tfidf_scores = tfidf_matching(
-            resume_text
-        )
+tfidf_scores = tfidf_matching(
+    resume_text
+)
 
-        sorted_tfidf = sorted(
-            tfidf_scores.items(),
-            key=lambda x: x[1],
-            reverse=True
-        )
+sorted_tfidf = sorted(
 
+    tfidf_scores.items(),
 
-        for role, score in sorted_tfidf:
+    key=lambda x:
+        x[1],
 
-            st.write(
-                f"**{role}** — "
-                f"{score}% similarity"
-            )
+    reverse=True
 
-            st.progress(
-                int(min(score, 100))
-            )
+)
 
 
-        # ====================================================
-        # SECTION 7 - SKILL GAP
-        # ====================================================
+for role, score in sorted_tfidf:
 
-        st.header(
-            "7. Skill Gap Analysis"
-        )
+    st.write(
+        f"**{role}** "
+        f"— {score}% similarity"
+    )
 
-        missing_skills = find_skill_gaps(
+    st.progress(
+        int(min(score, 100))
+    )
 
-            resume_text,
 
-            best_role["Role"]
+# ============================================================
+# 7. SKILL GAP ANALYSIS
+# ============================================================
 
-        )
+st.header(
+    "7. Skill Gap Analysis"
+)
 
+missing_skills = find_skill_gaps(
+
+    resume_text,
+
+    best_role["Role"]
+
+)
+
+
+st.write(
+
+    f"Skills required for "
+    f"**{best_role['Role']}**:"
+
+)
+
+
+if missing_skills:
+
+    for skill in missing_skills:
 
         st.write(
-            f"Recommended Role: "
-            f"**{best_role['Role']}**"
+            f"• {skill}"
         )
 
+else:
 
-        if missing_skills:
-
-            st.warning(
-                "Skills you should improve:"
-            )
-
-            for skill in missing_skills:
-
-                st.write(
-                    f"• {skill}"
-                )
-
-        else:
-
-            st.success(
-                "No major skill gaps detected."
-            )
+    st.success(
+        "Excellent! No major skill gaps "
+        "were detected for this role."
+    )
 
 
-        # ====================================================
-        # SECTION 8 - BANDIT STATISTICS
-        # ====================================================
+# ============================================================
+# 8. BANDIT STATISTICS
+# ============================================================
 
-        st.header(
-            "8. Bandit Statistics"
-        )
+st.header(
+    "8. Bandit Statistics"
+)
 
-        bandit_data = {
+bandit_table = {
 
-            "Role": [
-                role["name"]
-                for role in roles
-            ],
+    "Job Role": [
 
-            "Estimated Value":
-                np.round(
-                    arm_values,
-                    4
-                ),
+        role["name"]
 
-            "Selections":
-                arm_counts.astype(int)
+        for role in roles
 
-        }
+    ],
 
-        st.dataframe(
-            bandit_data,
-            hide_index=True,
-            use_container_width=True
-        )
+    "Estimated Value": np.round(
+
+        arm_values,
+
+        4
+
+    ),
+
+    "Selections": (
+
+        arm_counts.astype(int)
+
+    )
+
+}
 
 
-        # ====================================================
-        # RESUME TEXT
-        # ====================================================
+st.dataframe(
 
-        with st.expander(
-            "View Extracted Resume Text"
-        ):
+    bandit_table,
+
+    hide_index=True,
+
+    use_container_width=True
+
+)
+
+
+# ============================================================
+# 9. RESUME QUALITY DETAILS
+# ============================================================
+
+st.header(
+    "9. Resume Analysis Details"
+)
+
+
+with st.expander(
+    "Detected Education"
+):
+
+    if education_matches:
+
+        for item in education_matches:
 
             st.write(
-                resume_text
+                f"• {item}"
             )
 
+    else:
 
-    except Exception as e:
-
-        st.error(
-            "An error occurred while processing "
-            "the resume."
+        st.write(
+            "No education keywords detected."
         )
 
-        st.exception(e)
+
+with st.expander(
+    "Detected Project Indicators"
+):
+
+    if project_matches:
+
+        for item in project_matches:
+
+            st.write(
+                f"• {item}"
+            )
+
+    else:
+
+        st.write(
+            "No major project indicators detected."
+        )
+
+
+with st.expander(
+    "Detected Certifications"
+):
+
+    if certification_matches:
+
+        for item in certification_matches:
+
+            st.write(
+                f"• {item}"
+            )
+
+    else:
+
+        st.write(
+            "No certification indicators detected."
+        )
+
+
+with st.expander(
+    "Detected Soft Skills"
+):
+
+    if soft_skill_matches:
+
+        for item in soft_skill_matches:
+
+            st.write(
+                f"• {item}"
+            )
+
+    else:
+
+        st.write(
+            "No major soft-skill keywords detected."
+        )
+
+
+# ============================================================
+# 10. RESUME TEXT
+# ============================================================
+
+with st.expander(
+    "View Extracted Resume Text"
+):
+
+    st.write(
+        resume_text
+    )
