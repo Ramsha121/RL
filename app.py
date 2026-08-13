@@ -102,7 +102,7 @@ education_keywords = [
 
 
 # ============================================================
-# PROJECT / EXPERIENCE KEYWORDS
+# PROJECT KEYWORDS
 # ============================================================
 
 project_keywords = [
@@ -128,6 +128,10 @@ project_keywords = [
     "data analysis"
 ]
 
+
+# ============================================================
+# EXPERIENCE KEYWORDS
+# ============================================================
 
 experience_keywords = [
     "experience",
@@ -202,12 +206,12 @@ roles = [
         "name": "Business Analyst",
 
         "weights": np.array([
-            0.35,   # skills
-            0.15,   # education
-            0.20,   # projects
-            0.10,   # experience
-            0.10,   # certifications
-            0.10    # soft skills
+            0.35,   # Technical Skills
+            0.15,   # Education
+            0.20,   # Projects
+            0.10,   # Experience
+            0.10,   # Certifications
+            0.10    # Soft Skills
         ]),
 
         "link":
@@ -287,7 +291,6 @@ roles = [
 job_descriptions = {
 
     "Business Analyst":
-
         """
         business analyst business analysis
         sql excel power bi tableau
@@ -297,7 +300,6 @@ job_descriptions = {
         """,
 
     "Data Analyst":
-
         """
         data analyst data analysis
         sql python excel
@@ -307,7 +309,6 @@ job_descriptions = {
         """,
 
     "Machine Learning Intern":
-
         """
         machine learning python
         pandas numpy scikit-learn
@@ -317,7 +318,6 @@ job_descriptions = {
         """,
 
     "AI Intern":
-
         """
         artificial intelligence
         machine learning deep learning
@@ -327,7 +327,6 @@ job_descriptions = {
         """,
 
     "Research Analyst":
-
         """
         research analyst statistics
         data analysis
@@ -346,59 +345,49 @@ job_descriptions = {
 required_skills = {
 
     "Business Analyst": [
-
         "sql",
         "excel",
         "power bi",
         "tableau",
         "data analysis"
-
     ],
 
     "Data Analyst": [
-
         "sql",
         "python",
         "excel",
         "statistics",
         "data visualization"
-
     ],
 
     "Machine Learning Intern": [
-
         "python",
         "machine learning",
         "pandas",
         "numpy",
         "scikit-learn"
-
     ],
 
     "AI Intern": [
-
         "python",
         "machine learning",
         "deep learning",
         "nlp",
         "tensorflow"
-
     ],
 
     "Research Analyst": [
-
         "statistics",
         "python",
         "data analysis",
         "research",
         "sql"
-
     ]
 }
 
 
 # ============================================================
-# PDF EXTRACTION
+# PDF TEXT EXTRACTION
 # ============================================================
 
 def extract_resume_text(uploaded_file):
@@ -412,7 +401,6 @@ def extract_resume_text(uploaded_file):
         page_text = page.extract_text()
 
         if page_text:
-
             text += page_text + " "
 
     text = text.lower()
@@ -440,42 +428,11 @@ def get_matches(text, keywords):
 
             matches.append(keyword)
 
-    return sorted(
-        set(matches)
-    )
+    return sorted(set(matches))
 
 
 # ============================================================
-# NORMALIZED CATEGORY SCORE
-# ============================================================
-
-def category_score(
-    text,
-    keywords,
-    max_score=100
-):
-
-    matches = get_matches(
-        text,
-        keywords
-    )
-
-    if len(matches) == 0:
-
-        return 0, matches
-
-    ratio = len(matches) / len(keywords)
-
-    score = ratio * max_score
-
-    return round(
-        min(score, max_score),
-        2
-    ), matches
-
-
-# ============================================================
-# BETTER SKILL SCORE
+# TECHNICAL SKILL SCORE
 # ============================================================
 
 def calculate_skill_score(text):
@@ -485,10 +442,10 @@ def calculate_skill_score(text):
         skill_dictionary
     )
 
-    # We do NOT compare against every possible skill.
-    # The score rewards having a strong selection of relevant skills.
-
     skill_count = len(detected)
+
+    # Deliberately not 100 just because many keywords
+    # are detected.
 
     if skill_count >= 15:
         score = 95
@@ -542,7 +499,6 @@ def calculate_education_score(text):
             "engineering"
         ]
     ):
-
         score += 20
 
     if any(
@@ -556,11 +512,9 @@ def calculate_education_score(text):
             "master"
         ]
     ):
-
         score += 10
 
     if "cgpa" in text or "gpa" in text:
-
         score += 5
 
     return min(score, 100), matches
@@ -578,7 +532,6 @@ def calculate_project_score(text):
     )
 
     project_indicators = [
-
         "project",
         "developed",
         "built",
@@ -587,7 +540,6 @@ def calculate_project_score(text):
         "dashboard",
         "model",
         "simulation"
-
     ]
 
     indicators = get_matches(
@@ -626,28 +578,25 @@ def calculate_experience_score(text):
     )
 
     if "internship" in text or "intern" in text:
-
         score = 70
 
     elif "experience" in text:
-
         score = 65
 
     elif "worked" in text:
-
         score = 60
 
     elif "project" in text:
 
-        # Projects provide relevant experience
+        # Academic projects count as
+        # relevant practical exposure,
+        # but less than formal employment.
         score = 55
 
     else:
-
         score = 40
 
     if len(matches) >= 5:
-
         score += 10
 
     return min(
@@ -670,23 +619,18 @@ def calculate_certification_score(text):
     count = len(matches)
 
     if count >= 6:
-
         score = 95
 
     elif count >= 4:
-
         score = 85
 
     elif count >= 2:
-
         score = 75
 
     elif count >= 1:
-
         score = 60
 
     else:
-
         score = 40
 
     return score, matches
@@ -706,27 +650,21 @@ def calculate_soft_skill_score(text):
     count = len(matches)
 
     if count >= 8:
-
         score = 90
 
     elif count >= 6:
-
         score = 82
 
     elif count >= 4:
-
         score = 72
 
     elif count >= 2:
-
         score = 60
 
     elif count >= 1:
-
         score = 50
 
     else:
-
         score = 40
 
     return score, matches
@@ -768,7 +706,6 @@ def calculate_ats_score(
         +
 
         soft_skills * 0.10
-
     )
 
     return round(
@@ -778,7 +715,7 @@ def calculate_ats_score(
 
 
 # ============================================================
-# BANDIT TRAINING
+# K-ARMED BANDIT + GRADIENT ASCENT
 # ============================================================
 
 def train_bandit(
@@ -789,19 +726,30 @@ def train_bandit(
     random.seed(42)
     np.random.seed(42)
 
-    number_of_arms = len(
-        roles
-    )
+    number_of_arms = len(roles)
+
+    # --------------------------------------------------------
+    # EXPLORATION PARAMETER
+    # --------------------------------------------------------
 
     epsilon = 0.20
+
+    # --------------------------------------------------------
+    # BANDIT ARM VALUES
+    # --------------------------------------------------------
 
     arm_values = np.zeros(
         number_of_arms
     )
 
+    # Number of times each role is selected
     arm_counts = np.zeros(
         number_of_arms
     )
+
+    # --------------------------------------------------------
+    # GRADIENT ASCENT WEIGHTS
+    # --------------------------------------------------------
 
     weights = np.random.rand(
         len(features)
@@ -815,16 +763,21 @@ def train_bandit(
         features / 100
     )
 
+    # ========================================================
+    # TRAINING LOOP
+    # ========================================================
+
     for episode in range(
         episodes
     ):
 
         # ----------------------------------------------------
-        # EPSILON GREEDY SELECTION
+        # EPSILON-GREEDY ACTION SELECTION
         # ----------------------------------------------------
 
         if random.random() < epsilon:
 
+            # Explore a random role
             arm = random.randint(
                 0,
                 number_of_arms - 1
@@ -832,6 +785,8 @@ def train_bandit(
 
         else:
 
+            # Select role with highest
+            # estimated reward
             arm = int(
                 np.argmax(
                     arm_values
@@ -839,7 +794,7 @@ def train_bandit(
             )
 
         # ----------------------------------------------------
-        # ROLE SCORE
+        # ROLE-SPECIFIC SCORE
         # ----------------------------------------------------
 
         role_weights = roles[
@@ -852,11 +807,31 @@ def train_bandit(
         )
 
         # ----------------------------------------------------
-        # REWARD
+        # EXPLORATION NOISE
+        # ----------------------------------------------------
+        #
+        # Without this, the resume features remain fixed
+        # and the reward becomes almost identical at every
+        # episode.
+        #
+        # Small noise simulates variation in candidate/job
+        # interaction while keeping the reward realistic.
         # ----------------------------------------------------
 
-        reward = min(
-            role_score,
+        noise = np.random.normal(
+            0,
+            0.02
+        )
+
+        reward = (
+            role_score
+            +
+            noise
+        )
+
+        reward = np.clip(
+            reward,
+            0,
             1
         )
 
@@ -899,12 +874,10 @@ def train_bandit(
         )
 
     return (
-
         weights,
         arm_values,
         arm_counts,
         reward_history
-
     )
 
 
@@ -951,19 +924,15 @@ def calculate_role_scores(
         })
 
     results.sort(
-
-        key=lambda x:
-            x["Score"],
-
+        key=lambda x: x["Score"],
         reverse=True
-
     )
 
     return results
 
 
 # ============================================================
-# TF-IDF
+# TF-IDF JOB MATCHING
 # ============================================================
 
 def tfidf_matching(
@@ -987,11 +956,8 @@ def tfidf_matching(
     )
 
     similarities = cosine_similarity(
-
         matrix[0:1],
-
         matrix[1:]
-
     )[0]
 
     results = {}
@@ -1007,14 +973,13 @@ def tfidf_matching(
             ) * 100,
 
             2
-
         )
 
     return results
 
 
 # ============================================================
-# SKILL GAP
+# SKILL GAP ANALYSIS
 # ============================================================
 
 def find_skill_gaps(
@@ -1046,32 +1011,23 @@ st.sidebar.header(
 )
 
 uploaded_file = st.sidebar.file_uploader(
-
     "Upload Resume PDF",
-
     type=["pdf"]
-
 )
 
 st.sidebar.markdown("---")
 
 episodes = st.sidebar.slider(
-
     "Bandit Training Episodes",
-
     min_value=50,
-
     max_value=1000,
-
     value=300,
-
     step=50
-
 )
 
 
 # ============================================================
-# START APPLICATION
+# LANDING PAGE
 # ============================================================
 
 if uploaded_file is None:
@@ -1087,18 +1043,25 @@ if uploaded_file is None:
 
         Resume PDF
         ↓
+
         NLP Skill Extraction
         ↓
+
         Resume Feature Analysis
         ↓
+
         ATS Score
         ↓
+
         K-Armed Bandit
         ↓
+
         Job Role Recommendation
         ↓
+
         TF-IDF Similarity
         ↓
+
         Skill Gap Analysis
         """
     )
@@ -1137,7 +1100,7 @@ if not resume_text:
 
 
 # ============================================================
-# 1. SKILL EXTRACTION
+# 1. NLP SKILL EXTRACTION
 # ============================================================
 
 st.header(
@@ -1267,7 +1230,6 @@ ats_score = calculate_ats_score(
     certification_score,
 
     soft_skill_score
-
 )
 
 
@@ -1294,8 +1256,8 @@ elif ats_score >= 75:
 elif ats_score >= 65:
 
     st.warning(
-        f"Good Resume, but there is room for improvement — "
-        f"{ats_score}/100"
+        f"Good Resume, but there is room "
+        f"for improvement — {ats_score}/100"
     )
 
 elif ats_score >= 50:
@@ -1312,7 +1274,7 @@ else:
 
 
 # ============================================================
-# 4. BANDIT
+# 4. K-ARMED BANDIT
 # ============================================================
 
 st.header(
@@ -1322,15 +1284,10 @@ st.header(
 features = np.array([
 
     skill_score,
-
     education_score,
-
     project_score,
-
     experience_score,
-
     certification_score,
-
     soft_skill_score
 
 ])
@@ -1345,7 +1302,6 @@ features = np.array([
 ) = train_bandit(
 
     features,
-
     episodes
 
 )
@@ -1353,6 +1309,10 @@ features = np.array([
 
 col1, col2 = st.columns(2)
 
+
+# ============================================================
+# LEARNED WEIGHTS
+# ============================================================
 
 with col1:
 
@@ -1381,15 +1341,15 @@ with col1:
     }
 
     st.dataframe(
-
         weight_table,
-
         hide_index=True,
-
         use_container_width=True
-
     )
 
+
+# ============================================================
+# IMPROVED TRAINING GRAPH
+# ============================================================
 
 with col2:
 
@@ -1397,10 +1357,54 @@ with col2:
         "Training Reward"
     )
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(
+        figsize=(8, 5)
+    )
+
+    # --------------------------------------------------------
+    # RAW REWARD
+    # --------------------------------------------------------
 
     ax.plot(
-        reward_history
+        reward_history,
+        alpha=0.25,
+        label="Raw Reward"
+    )
+
+    # --------------------------------------------------------
+    # MOVING AVERAGE
+    # --------------------------------------------------------
+
+    window = 30
+
+    if len(reward_history) >= window:
+
+        moving_average = np.convolve(
+
+            reward_history,
+
+            np.ones(window) / window,
+
+            mode="valid"
+
+        )
+
+        ax.plot(
+
+            range(
+                window - 1,
+                len(reward_history)
+            ),
+
+            moving_average,
+
+            linewidth=2,
+
+            label="30-Episode Moving Average"
+        )
+
+    ax.set_title(
+        "K-Armed Bandit Learning Progress"
     )
 
     ax.set_xlabel(
@@ -1411,14 +1415,17 @@ with col2:
         "Reward"
     )
 
-    ax.set_title(
-        "K-Armed Bandit Reward"
+    ax.set_ylim(
+        0,
+        1
     )
 
     ax.grid(
         True,
         alpha=0.3
     )
+
+    ax.legend()
 
     st.pyplot(
         fig
@@ -1475,17 +1482,17 @@ fig, ax = plt.subplots(
 
 role_names = [
 
-    r["Role"]
+    result["Role"]
 
-    for r in role_results
+    for result in role_results
 
 ]
 
 role_scores = [
 
-    r["Score"]
+    result["Score"]
 
-    for r in role_results
+    for result in role_results
 
 ]
 
@@ -1556,8 +1563,7 @@ sorted_tfidf = sorted(
 
     tfidf_scores.items(),
 
-    key=lambda x:
-        x[1],
+    key=lambda x: x[1],
 
     reverse=True
 
@@ -1567,8 +1573,8 @@ sorted_tfidf = sorted(
 for role, score in sorted_tfidf:
 
     st.write(
-        f"**{role}** "
-        f"— {score}% similarity"
+        f"**{role}** — "
+        f"{score}% similarity"
     )
 
     st.progress(
@@ -1592,7 +1598,6 @@ missing_skills = find_skill_gaps(
 
 )
 
-
 st.write(
 
     f"Skills required for "
@@ -1602,6 +1607,10 @@ st.write(
 
 
 if missing_skills:
+
+    st.warning(
+        "Skills that could be improved:"
+    )
 
     for skill in missing_skills:
 
@@ -1664,7 +1673,7 @@ st.dataframe(
 
 
 # ============================================================
-# 9. RESUME QUALITY DETAILS
+# 9. RESUME ANALYSIS DETAILS
 # ============================================================
 
 st.header(
@@ -1749,7 +1758,7 @@ with st.expander(
 
 
 # ============================================================
-# 10. RESUME TEXT
+# 10. EXTRACTED RESUME
 # ============================================================
 
 with st.expander(
